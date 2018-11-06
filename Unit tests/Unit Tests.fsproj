@@ -5,9 +5,12 @@
     <RootNamespace>Log_Anal</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>LogDataExtractor.UnitTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Extractor test.fs" />
     <Compile Include="Test2.fs" />
   </ItemGroup>
 
