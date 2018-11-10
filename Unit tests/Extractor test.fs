@@ -1,9 +1,9 @@
 ﻿module Tests.ExtractorTest
 
-open NUnit.Framework
-open LogDataExtractor.Core
 open System
-open LogDataExtractor.Core.Extractor
+open NUnit.Framework
+open LogsDataExtractor.Core
+open LogsDataExtractor.Core.Entities
 
 
 
@@ -27,4 +27,6 @@ let ``extract the date from the line`` () =
 
     let record = Extractor.extract line
     Assert.AreEqual(expectedResult, record.Date)
+
+
 

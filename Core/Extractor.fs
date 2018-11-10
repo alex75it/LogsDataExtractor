@@ -1,15 +1,9 @@
-﻿module LogDataExtractor.Core.Extractor
+﻿module LogsDataExtractor.Core.Extractor
 
 open System
-open System.Text.RegularExpressions
-
-type Record = {
-    Date: DateTime
-    Message: string
-} 
-
-
 open System.Globalization
+open Entities
+
 
 // create an active pattern for the Date
 let (|Date|_|) (input:string) =

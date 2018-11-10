@@ -1,4 +1,4 @@
-﻿module LogDataExtractor.Extensions
+﻿module LogsDataExtractor.Core.Extensions
 
 open System
 

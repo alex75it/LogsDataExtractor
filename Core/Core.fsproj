@@ -3,7 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyName>LogDataExtractor.Core</AssemblyName>
+    <AssemblyName>Alex75.LogsDataExtractor.Core</AssemblyName>
+    <PackageId>Alex75.LogsDataExtractor</PackageId>
+    <Authors>Alessandro Piccione</Authors>
+    <Company>Dreamsoft</Company>
+    <Product>Logs Data Extractor</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Entities.fs" />
     <Compile Include="Extensions.fs" />
     <Compile Include="Extractor.fs" />
     <Compile Include="Program.fs" />
