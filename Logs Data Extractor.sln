@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{E4AB64D4-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD566AB3-F0A0-408B-96B1-BA2CF02BFF57}"
 	ProjectSection(SolutionItems) = preProject
+		package.nuspec = package.nuspec
 		README.md = README.md
 	EndProjectSection
 EndProject

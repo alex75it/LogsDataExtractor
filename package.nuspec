@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>LogsDataExtractor</id>
+		<version>0.1</version>
+		<title>Logs Data Extractor</title>
+		<authors>Alessandro Piccione</authors>
+		<owners>Alessandro Piccione</owners>
+		<licenseUrl></licenseUrl>
+		<projectUrl></projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Extract data from log files</description>
+		<summary>The input log files have this log4net layout pattern:
+%d{yyyy-MM-dd HH:mm:ss} %-5p %message%newline
+		</summary>
+	<releaseNotes />
+		<copyright />
+		<language>en-US</language>
+		<tags>logs log4net</tags>
+	</metadata>
+</package>

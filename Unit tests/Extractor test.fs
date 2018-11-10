@@ -3,6 +3,7 @@
 open NUnit.Framework
 open LogDataExtractor.Core
 open System
+open LogDataExtractor.Core.Extractor
 
 
 
@@ -14,8 +15,8 @@ let ``extract one line should return a Record`` () =
 
     let result = Extractor.extract line
     Assert.NotNull(result)
-    //Assert.True(typeof result = Record)
-    //Assert.AreEqual(expectedResult, result)
+    Assert.True(typeof<Record> = result.GetType() )
+    Assert.AreEqual(line, result.Message)
 
 
 [<Test>]
