@@ -28,8 +28,11 @@ let ``extract the date from the line`` () =
     Assert.AreEqual(expectedResult, record.Date)
 
     
+[<TestCase("DEBUG", LogLevel.Debug)>]
 [<TestCase("INFO", LogLevel.Info)>]
+[<TestCase("WARN", LogLevel.Warn)>]
 [<TestCase("ERROR", LogLevel.Error)>]
+[<TestCase("FATAL", LogLevel.Fatal)>]
 let ``extract the log level from the line`` (level, logLevel:LogLevel) =
     
     let line = sprintf "9999-12-31 %s aaaaaaaaaaaaaaaaaa" level

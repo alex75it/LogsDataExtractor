@@ -12,9 +12,14 @@ let (|Date|_|) (input:string) =
     | _ -> None
 
 let (|LogLevel|_|) (input:string) =
-    if input.Length >= 10 + 1 + 5 then
-        match input.Substring(11,5) with
+    let pieces = input.Split(" ")
+    if pieces.Length > 1 then
+        match pieces.[1] with
+        | "DEBUG" -> Some(LogLevel.Debug)
         | "INFO" -> Some(LogLevel.Info)
+        | "WARN" -> Some(LogLevel.Warn)
+        | "ERROR" -> Some(LogLevel.Error)
+        | "FATAL" -> Some(LogLevel.Fatal)
         | _ -> None
     else
         None
