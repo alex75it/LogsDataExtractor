@@ -11,7 +11,13 @@ let (|Date|_|) (input:string) =
     | true, date -> Some(date)
     | _ -> None
 
-  
+let (|LogLevel|_|) (input:string) =
+    if input.Length >= 10 + 1 + 5 then
+        match input.Substring(11,5) with
+        | "INFO" -> Some(LogLevel.Info)
+        | _ -> None
+    else
+        None
 
 let extract line =
 
@@ -20,9 +26,13 @@ let extract line =
         | Date date -> date
         | _ -> DateTime.Now 
 
-    
+    let logLevel = match line with 
+    | LogLevel level -> level
+    | _ -> LogLevel.Info
+
     { 
         Date = date
+        Level = logLevel
         Message = line
     }
 
