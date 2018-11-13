@@ -11,8 +11,10 @@ open LogsDataExtractor.Core.Entities
 let ``extract one line should return a Record`` () =
     
     let line = "this is a line"
+    let dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-    let result = Extractor.extract line
+    let result = Extractor.extract(line, dateFormat)
+
     Assert.NotNull(result)
     Assert.True(typeof<Record> = result.GetType() )
     Assert.AreEqual(line, result.Message)
@@ -21,10 +23,12 @@ let ``extract one line should return a Record`` () =
 [<Test>]
 let ``extract the date from the line`` () =
     
-    let line = "9999-12-31 aaaaaaaaaaaaaaaaaa"
-    let expectedResult = new DateTime(9999, 12, 31)
+    let line = "9999-12-31 23:59:59 aaaaaaaaaaaaaaaaaa"
+    let dateFormat = "yyyy-MM-dd HH:mm:ss"
+    let expectedResult = new DateTime(9999, 12, 31, 23, 59, 59)
+    
+    let record = Extractor.extract( line, dateFormat)
 
-    let record = Extractor.extract line
     Assert.AreEqual(expectedResult, record.Date)
 
     
@@ -35,7 +39,9 @@ let ``extract the date from the line`` () =
 [<TestCase("FATAL", LogLevel.Fatal)>]
 let ``extract the log level from the line`` (level, logLevel:LogLevel) =
     
-    let line = sprintf "9999-12-31 %s aaaaaaaaaaaaaaaaaa" level
-        
-    let record = Extractor.extract line
+    let line = sprintf "9999-12-31 00:00:00 %s aaaaaaaaaaaaaaaaaa" level
+    let dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+    let record = Extractor.extract(line, dateFormat)
+
     Assert.AreEqual( logLevel, record.Level)

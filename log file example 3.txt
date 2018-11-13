@@ -1,0 +1,9 @@
+2018-10-31 00:00:18 INFO  [123] Message text
+2018-10-31 00:00:18 INFO  [123] Message text 2
+2018-10-31 00:00:18 INFO  [123] Message text 3
+2018-10-31 00:00:18 INFO  [123] Message text long long long long 
+2018-10-31 00:00:18 WARN  [123] Message text
+2018-10-31 00:00:18 ERROR [123] Message text
+2018-10-31 00:00:18 INFO  [1] Message text on thread 1
+2018-11-01 00:00:18 INFO  [1] Message text on 1st November
+2018-12-31 00:00:18 INFO  [1] Message text on 31 December

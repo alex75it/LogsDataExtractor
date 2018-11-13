@@ -9,6 +9,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Unit Tests", "Unit tests\Un
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{E4AB64D4-02CA-42DA-8277-C413B4F462F6}"
 	ProjectSection(SolutionItems) = preProject
+		log file example 2.txt = log file example 2.txt
+		log file example 3.txt = log file example 3.txt
 		data\log file example.txt = data\log file example.txt
 	EndProjectSection
 EndProject

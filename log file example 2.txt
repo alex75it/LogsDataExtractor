@@ -1,0 +1,1 @@
+2018-11-02 00:00:18 INFO  (IP:  95.150.158.223 Request to: /api/settings/validateKey/AAAA43E2-E16C-45AE-B4B2-AA85D451FA5A (HTTP Referer: https://www.xrp-shop.com/admin) with API Token: -619723258
