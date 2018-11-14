@@ -13,29 +13,29 @@ let (|Date|_|) (input:string, format:string) =
     | true, date -> Some(date)
     | _ -> None
 
-//let (|Date|_|) (input:string) =
-//    match DateTime.TryParseExact(input, "", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal) with
-//    | true, date -> Some(date)
-//    | _ -> None
 
 let (|LogLevel|_|) (input:string) =
-
     match input with
-        | "DEBUG" -> Some(LogLevel.Debug)
-        | "INFO" -> Some(LogLevel.Info)
-        | "WARN" -> Some(LogLevel.Warn)
-        | "ERROR" -> Some(LogLevel.Error)
-        | "FATAL" -> Some(LogLevel.Fatal)
-        | _ -> None
+    | "DEBUG" -> Some(LogLevel.Debug)
+    | "INFO" -> Some(LogLevel.Info)
+    | "WARN" -> Some(LogLevel.Warn)
+    | "ERROR" -> Some(LogLevel.Error)
+    | "FATAL" -> Some(LogLevel.Fatal)
+    | _ -> None
 
 
 // extract the Record from the single line
 let extract (line:string, dateFormat:string) =
 
-    let pieces = line.Split(' ', 5) // separators // date, time, thread, level, message
 
+    let partsCount = 
+        match dateFormat.Contains(" ") with
+        | true -> 5
+        | _ -> 4
 
+    let pieces = line.Split(' ', partsCount) // separators // date, time, thread, level, message
 
+    
     let date = 
         match (sprintf "%s %s" pieces.[0] pieces.[1]), dateFormat with
         | Date date -> date
@@ -43,8 +43,8 @@ let extract (line:string, dateFormat:string) =
 
 
     let logLevel = match pieces.[2] with 
-    | LogLevel level -> level
-    | _ -> LogLevel.Info
+                   | LogLevel level -> level
+                   | _ -> LogLevel.Info
 
     { 
         Date = date
