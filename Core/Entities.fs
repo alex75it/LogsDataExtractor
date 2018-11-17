@@ -10,6 +10,7 @@ type LogLevel =
 type Record = {
     Date: System.DateTime
     Level: LogLevel
+    Thread: int
     Message: string
 } 
 
