@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Extractor test.fs" />
+    <Compile Include="Line Extractor test.fs" />
   </ItemGroup>
 
   <ItemGroup>

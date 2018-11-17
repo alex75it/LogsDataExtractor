@@ -59,14 +59,16 @@ let extract (line:string, dateFormat:string, threadPosition:int option) =
     if threadPosition.IsSome then 
         // move thread position of one because date-time take 2 positions
         thread <- match pieces.[threadPosition.Value+1] with
-                 | Thread thread -> thread
-                 | _ -> 0
+                  | Thread thread -> thread
+                  | _ -> 0
+
+    let message = Array.last(pieces)
 
     { 
         Date = date
         Level = logLevel
         Thread = thread
-        Message = line
+        Message = message
     }
 
 

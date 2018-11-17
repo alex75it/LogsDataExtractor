@@ -17,7 +17,6 @@ let ``extract one line should return a Record`` () =
 
     Assert.NotNull(result)
     Assert.True(typeof<Record> = result.GetType() )
-    Assert.AreEqual(line, result.Message)
 
 
 [<Test>]
@@ -33,8 +32,8 @@ let ``extract the date from the line`` () =
 
     
 [<TestCase("DEBUG", LogLevel.Debug)>]
-[<TestCase("INFO", LogLevel.Info)>]
-[<TestCase("WARN", LogLevel.Warn)>]
+[<TestCase("INFO ", LogLevel.Info)>]
+[<TestCase("WARN ", LogLevel.Warn)>]
 [<TestCase("ERROR", LogLevel.Error)>]
 [<TestCase("FATAL", LogLevel.Fatal)>]
 let ``extract the log level from the line`` (level, logLevel:LogLevel) =
@@ -63,10 +62,19 @@ let ``extract the thread from the line`` (thread:int) =
 [<Test>]
 let ``extract 0 as thread from the line when there is no thread`` () =
     
-    let line = "9999-12-31 00:00:00 INFO aaaaaaaaaaaaaaaaaa"
+    let line = "9999-12-31 00:00:00 INFO  aaaaaaaaaaaaaaaaaa"
     let dateFormat = "yyyy-MM-dd HH:mm:ss"
 
     let record = Extractor.extract(line, dateFormat, None)
 
     Assert.AreEqual( 0, record.Thread)
 
+[<TestCase("aaaaaa")>]
+let ``extract the message, single line`` (message) =
+    
+    let line = sprintf "9999-12-31 00:00:00 INFO %s" message
+    let dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+    let record = Extractor.extract(line, dateFormat, None)
+
+    Assert.AreEqual(message, record.Message)
