@@ -1,5 +1,7 @@
 ﻿module LogsDataExtractor.Core.Extensions
 
+// NO MORE USED
+
 open System
 
 // based on this: 

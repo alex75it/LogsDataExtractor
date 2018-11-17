@@ -18,6 +18,8 @@
   <ItemGroup>
     <Compile Include="Entities.fs" />
     <Compile Include="Extensions.fs" />
+    <Compile Include="Extractor patterns.fs" />
+    <Compile Include="Line Extractor.fs" />
     <Compile Include="Extractor.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
