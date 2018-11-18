@@ -14,3 +14,7 @@ type Record = {
     Message: string
 } 
 
+
+type Result =
+    | Record of Record
+    | String of string

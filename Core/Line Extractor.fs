@@ -21,41 +21,52 @@ type LineExtractor (dateFormat:string, hasThread:bool) =
     
    
     // extract the Record from the single line
-    member self.extract (line:string) =    
+    member self.extract (line:string): Result =
 
-        let pieces = line.Split(' ', partsCount)
-    
         let date = 
-            match (sprintf "%s %s" pieces.[0] pieces.[1]), dateFormat with
-            | Date date -> date
-            | _ -> DateTime.Now 
+            if line.Length < dateFormat.Length then
+                None
+            else
+                match line.Substring(0, dateFormat.Length), dateFormat with
+                | Date date -> Some(date)
+                | _ -> None
+
+        if date.IsSome then
+
+            //let pieces = line.Split(' ', partsCount)
+    
+            // this is ok for non fixed length level patterns
+            //let logLevel = match pieces.[levelPosition] with 
+            //               | LogLevel level -> level
+            //               | _ -> LogLevel.Info
 
 
-        let logLevel = match pieces.[levelPosition] with 
-                       | LogLevel level -> level
-                       | _ -> LogLevel.Info
-
-        //let mutable thread = 0
-        //if hasThread then thread <- match pieces.[threadPosition] with
-        //                            | Thread thread -> thread
-        //                            | _ -> 0
+            // consider a 5 character long level
+            let logLevel = match line.Substring(dateFormat.Length + 1, 5).TrimEnd() with 
+                           | LogLevel level -> level
+                           | _ -> LogLevel.Info
 
 
-        let thread = if not hasThread then 0
-                     else match pieces.[threadPosition] with 
-                          | Thread thread -> thread
-                          | _ -> 0
+            let thread = if not hasThread then 0
+                         else match line.Substring(dateFormat.Length + 7, 5) with 
+                              | Thread thread -> thread
+                              | _ -> 0
                 
 
-        let message = Array.last(pieces)
+            let threadLength = if not hasThread then 0 else thread.ToString().Length + 3 // add brackets and space 
+            
+            let message = line.Substring(dateFormat.Length + 7 + threadLength) // add the brackets and the space
 
-        { 
-            Date = date
-            Level = logLevel
-            Thread = thread
-            Message = message
-        }
+            Result.Record { 
+                Date = date.Value
+                Level = logLevel
+                Thread = thread
+                Message = message
+            }
 
+        else
+            Result.String line
+            
 
     //new (dateFormat) = LineExtractor(dateFormat, None)
 

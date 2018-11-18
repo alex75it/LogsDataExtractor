@@ -12,7 +12,7 @@ open LogsDataExtractor.Core.Entities
 
 
 [<Test>][<Category("Extractor")>]
-let ``extract one line should return a Record`` () =
+let ``extract one line should return a MessageLine`` () =
     
     let line = "this is a line"
     let dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -20,9 +20,9 @@ let ``extract one line should return a Record`` () =
     let extractor = new LineExtractor(dateFormat, false)
     let result = extractor.extract line
 
-    Assert.NotNull(result)
-    Assert.True(typeof<Record> = result.GetType() )
-
+    match result with
+    | String text -> Assert.AreEqual(line, text)
+    | _ -> Assert.Fail "result is not a string"
 
 [<Test>]
 let ``extract the date from the line`` () =
@@ -30,13 +30,21 @@ let ``extract the date from the line`` () =
     let line = "9999-12-31 23:59:59 aaaaaaaaaaaaaaaaaa"
     let dateFormat = "yyyy-MM-dd HH:mm:ss"
     let expectedResult = new DateTime(9999, 12, 31, 23, 59, 59)
-    
+
     let extractor = new LineExtractor(dateFormat, false)
-    let record = extractor.extract line
-
-    Assert.AreEqual(expectedResult, record.Date)
+    let result = extractor.extract line
+    
+    // Assert.AreEqual(expectedResult, result.Record .Date)
+    match result with 
+    | Record record -> Assert.AreEqual(expectedResult, record.Date)
+    | _ -> Assert.Fail "Record is not returned"
 
     
+let assertRecord result assertFunction =
+    match result with 
+    | Record record -> assertFunction record
+    | _ -> Assert.Fail "Result is not  Record"
+
 [<TestCase("DEBUG", LogLevel.Debug)>]
 [<TestCase("INFO ", LogLevel.Info)>]
 [<TestCase("WARN ", LogLevel.Warn)>]
@@ -48,9 +56,13 @@ let ``extract the log level from the line`` (level, logLevel:LogLevel) =
     let dateFormat = "yyyy-MM-dd HH:mm:ss"
 
     let extractor = new LineExtractor(dateFormat, false)
-    let record = extractor.extract line
+    let result = extractor.extract line
 
-    Assert.AreEqual( logLevel, record.Level)
+    //Assert.AreEqual( logLevel, record.Level)
+    //assertRecord result function Assert.AreEqual(logLevel, record.)
+    match result with 
+    | Record record -> Assert.AreEqual(logLevel, record.Level)
+    | _ -> Assert.Fail "Record is not returned"
 
 
 
@@ -62,9 +74,12 @@ let ``extract the thread from the line`` (thread:int) =
     let dateFormat = "yyyy-MM-dd HH:mm:ss"
 
     let extractor = new LineExtractor(dateFormat, true)
-    let record = extractor.extract line
+    let result = extractor.extract line
 
-    Assert.AreEqual( thread, record.Thread)
+    //Assert.AreEqual( thread, record.Thread)
+    match result with 
+    | Record record -> Assert.AreEqual(thread, record.Thread)
+    | _ -> Assert.Fail "Record is not returned"
 
 
 [<Test>]
@@ -74,9 +89,13 @@ let ``extract 0 as thread from the line when there is no thread`` () =
     let dateFormat = "yyyy-MM-dd HH:mm:ss"
 
     let extractor = new LineExtractor(dateFormat, false)
-    let record = extractor.extract line
+    let result = extractor.extract line
 
-    Assert.AreEqual( 0, record.Thread)
+    //Assert.AreEqual( 0, record.Thread)
+    match result with 
+    | Record record -> Assert.AreEqual(0, record.Thread)
+    | _ -> Assert.Fail "Record is not returned"
+
 
 [<TestCase("aaaaaa")>]
 let ``extract the message, single line`` (message) =
@@ -85,6 +104,9 @@ let ``extract the message, single line`` (message) =
     let dateFormat = "yyyy-MM-dd HH:mm:ss"
 
     let extractor = new LineExtractor(dateFormat, false)
-    let record = extractor.extract line
+    let result = extractor.extract line
 
-    Assert.AreEqual(message, record.Message)
+    //Assert.AreEqual(message, record.Message)
+    match result with 
+    | Record record -> Assert.AreEqual(message, record.Message)
+    | _ -> Assert.Fail "Record is not returned"
