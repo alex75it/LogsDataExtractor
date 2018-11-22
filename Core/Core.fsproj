@@ -21,6 +21,7 @@
     <Compile Include="Extractor patterns.fs" />
     <Compile Include="Line Extractor.fs" />
     <Compile Include="Extractor.fs" />
+    <Compile Include="File Extractor.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

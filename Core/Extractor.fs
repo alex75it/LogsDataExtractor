@@ -1,5 +1,7 @@
 ﻿module LogsDataExtractor.Core.Extractor
 
+// all code moved to the class LineExtractor
+
 //open System
 //open System.Globalization
 //open System.Text.RegularExpressions
