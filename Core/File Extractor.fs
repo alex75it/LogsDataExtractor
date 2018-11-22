@@ -18,51 +18,45 @@ type fileResult = {
 //}
 
 // https://stackoverflow.com/questions/2365527/how-read-a-file-into-a-seq-of-lines-in-f
-let readlines filePath = System.IO.File.ReadLines(filePath)
+let readlines filePath = 
+    if File.Exists filePath then System.IO.File.ReadLines(filePath)
+    else Seq.empty<string>
 
 
 // read a file and returns the log Records and stats
 type FileExtractor (filePath:string) =
 
-    //let dateFormat = "yyyy-MM-dd HH:mm:ss"
-    //let lineExtracor = new LineExtractor(dateFormat, false)
-    //let result = lineExtracor.extract line
-
     
     member this.extract = 
+
+        // how to add this check without increasing the indentation ?
+        //if File.Exists filePath then
 
         let dateFormat = "yyyy-MM-dd HH:mm:ss"
         let lineExtracor = new LineExtractor(dateFormat, false)
 
         let records = new List<Record>()
 
-        let addRecord record = records.Add record
+        let mutable currentRecord = Some(Record)
+        let addRecord record = 
+            records.Add record
+            currentRecord <- None // how to pass record instead ??
+        let concatenateMessage record partialMessage = () // record.addLine partialMessage
 
         
-        //let manageResult result currentRecord =
-
-        //    //let currentRecord <- result
-
-        //    match result with
-        //    | Record record -> addRecord |> Some(record)
-        //    | _ -> currentRecord.
-       
-        //let manageLine line:string = 
-        //    match lineExtracor.extract line with
-        //    | Record -> addRecord
-        //    | _ -> ignore
-        //    printf "%s" line
-
-        for line in File.ReadLines filePath do
-            //printf "%s" line
-            let result = lineExtracor.extract line
-            match result with
-            | Record record -> addRecord record
-            | _ -> ()
-            //manageLine line
+      
+        let manageLine line currentRecord option = 
+            match lineExtracor.extract line with
+            | Record record ->  addRecord record
+            | String message -> concatenateMessage currentRecord message
 
 
-            
+        for line in readlines filePath do
+            match lineExtracor.extract line with
+            | Record record ->  addRecord record
+            | String message -> concatenateMessage None message
+
+        records
 
         //File.ReadLines filePath
         //|> Seq.iter (fun line -> manageLine)

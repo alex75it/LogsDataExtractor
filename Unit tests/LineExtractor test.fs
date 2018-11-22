@@ -91,7 +91,7 @@ let ``extract 0 as thread from the line when there is no thread`` () =
     let extractor = new LineExtractor(dateFormat, false)
     let result = extractor.extract line
 
-    //Assert.AreEqual( 0, record.Thread)
+    //Assert.AreEqual(0, record.Thread)
     match result with 
     | Record record -> Assert.AreEqual(0, record.Thread)
     | _ -> Assert.Fail "Record is not returned"
