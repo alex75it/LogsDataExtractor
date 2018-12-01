@@ -11,11 +11,6 @@ type fileResult = {
     totalRecords: int
     }
 
-//let readlines (filePath:string) = seq {
-//    use reader = new StreamReader(filePath)
-//    while not reader.EndOfStream do
-//        yield reader.ReadLine()
-//}
 
 // https://stackoverflow.com/questions/2365527/how-read-a-file-into-a-seq-of-lines-in-f
 let readlines filePath = 
@@ -24,51 +19,48 @@ let readlines filePath =
 
 
 // read a file and returns the log Records and stats
-type FileExtractor (filePath:string) =
+let extract (filePath:string) =
 
-    
-    member this.extract = 
+    let dateFormat = "yyyy-MM-dd HH:mm:ss"
+    let lineExtracor = new LineExtractor(dateFormat, false)
 
-        // how to add this check without increasing the indentation ?
-        //if File.Exists filePath then
+    let records = new List<Record>()
 
-        let dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let lineExtracor = new LineExtractor(dateFormat, false)
+    //let mutable currentRecord = Some(Record)
+    let addRecord record = 
+        records.Add record
+        record
+        //currentRecord <- None // how to pass record instead ??
+    let concatenateMessage record partialMessage = 
+        //record.addLine partialMessage
+        record
 
-        let records = new List<Record>()
-
-        let mutable currentRecord = Some(Record)
-        let addRecord record = 
-            records.Add record
-            currentRecord <- None // how to pass record instead ??
-        let concatenateMessage record partialMessage = () // record.addLine partialMessage
-
-        
       
-        let manageLine line currentRecord option = 
-            match lineExtracor.extract line with
-            | Record record ->  addRecord record
-            | String message -> concatenateMessage currentRecord message
+    let manageLine line currentRecord option = 
+        match lineExtracor.extract line with
+        | Record record ->  addRecord record
+        | String message -> concatenateMessage currentRecord message
+        
 
+    //for line in readlines filePath do
+    //    match lineExtracor.extract line with
+    //    | Record record ->  addRecord record
+    //    | String message -> concatenateMessage None message
 
-        for line in readlines filePath do
-            match lineExtracor.extract line with
-            | Record record ->  addRecord record
-            | String message -> concatenateMessage None message
+    //for line in readlines filePath do
 
-        records
+    //    manageLine line None        
 
-        //File.ReadLines filePath
-        //|> Seq.iter (fun line -> manageLine)
-        //|> lineExtracor.extract 
-        //|> match result with
-        //    | Record -> ignore
-        //    | _ -> ignore
-        //readlines filePath |> 
+    //    match lineExtracor.extract line with
+    //    | Record record ->  addRecord record |> ignore
+    //    | String message -> concatenateMessage None message
 
+    records
 
-
-    
-
-    
-
+    //File.ReadLines filePath
+    //|> Seq.iter (fun line -> manageLine)
+    //|> lineExtracor.extract 
+    //|> match result with
+    //    | Record -> ignore
+    //    | _ -> ignore
+    //readlines filePath |> 

@@ -10,6 +10,18 @@ The log files have this log4net layout pattern:
 %d{yyyy-MM-dd HH:mm:ss} %-5p %message%newline
 
 
+## How it works
+
+### On a single file
+Run the _FileExtrctor_ `extract` method passing the log file path as argument.
+
+### On a log files folder
+Run the _FileExtractor_ `extract` method passing the log file directory as argument.  
+FileExtractor will run parse all the files in the directory.
+
+### Initial date
+An initial date can be given as argument. The process will ignore logs with a date before that one. 
+
 
 ## DEV
 
