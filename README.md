@@ -8,7 +8,7 @@ The extracted data are saved in a CSV file.
 The log files have this [log4net layout pattern](https://svn.apache.org/repos/asf/logging/site/trunk/docs/log4net/release/sdk/log4net.Layout.PatternLayout.html):  
 %d{yyyy-MM-dd HH:mm:ss} %-5p %message%newline
 
-## Work in progress, under development ##
+## Work in progress. This project is under development and not yet completed ##
 
 ## How it works
 
