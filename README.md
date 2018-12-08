@@ -5,9 +5,10 @@ The core application is a .Net Standard library that can be used in .Net Core or
 The extracted data are saved in a CSV file.  
 
   
-The log files have this [log4net layout pattern](https://svn.apache.org/repos/asf/logging/site/trunk/docs/log4net/release/sdk/log4net.Layout.PatternLayout.html):
+The log files have this [log4net layout pattern](https://svn.apache.org/repos/asf/logging/site/trunk/docs/log4net/release/sdk/log4net.Layout.PatternLayout.html):  
 %d{yyyy-MM-dd HH:mm:ss} %-5p %message%newline
 
+## Work in progress, under development ##
 
 ## How it works
 
@@ -19,7 +20,7 @@ Run the _FileExtractor_ `extract` method passing the log file directory as argum
 FileExtractor will run parse all the files in the directory.
 
 ### Initial date
-An initial date can be given as argument. The process will ignore logs with a date before that one. 
+An initial date can be given as argument. The process will ignore logs with a date before that one. (WIP)
 
 
 ## DEV
