@@ -1,9 +1,11 @@
-﻿module LogsDataExtractor.Core.FileExtractor
+module LogsDataExtractor.Core.FileExtractor
 
 open System.IO
 open System.Collections.Generic
 open LineExtractor
 open LogsDataExtractor.Core.Entities
+open System.Linq.Expressions
+open System
 
 type fileResult = {
     totalLines: int
@@ -21,6 +23,8 @@ let readlines filePath =
 // read a file and returns the log Records and stats
 let extract (filePath:string) =
 
+    if not <| File.Exists filePath then raise(FileNotFoundException())
+
     let dateFormat = "yyyy-MM-dd HH:mm:ss"
     let lineExtracor = new LineExtractor(dateFormat, false)
 
@@ -35,11 +39,25 @@ let extract (filePath:string) =
         //record.addLine partialMessage
         record
 
+    
       
-    let manageLine line currentRecord option = 
+    let manageLine line currentRecord =       
         match lineExtracor.extract line with
-        | Record record ->  addRecord record
-        | String message -> concatenateMessage currentRecord message
+        | Record record ->  addRecord record |> ignore
+        | String message -> concatenateMessage currentRecord message |> ignore
+        //|:> Record
+
+    let manageLine_2 line currentRecord = ()
+        
+
+    let rec_ = Record
+    manageLine_2 "" rec_
+
+        //| String message ->
+        //    match currentRecord with
+        //    | Record currentRecord -> concatenateMessage currentRecord message
+        //    | _ -> Expression.Throw( Exception(""))
+        
         
 
     //for line in readlines filePath do
@@ -47,8 +65,12 @@ let extract (filePath:string) =
     //    | Record record ->  addRecord record
     //    | String message -> concatenateMessage None message
 
-    //for line in readlines filePath do
-
+    let mutable currentRecord = Record
+    for line in readlines filePath do
+        manageLine line currentRecord
+        
+        //match manageLine line currentRecord with
+        //| _
     //    manageLine line None        
 
     //    match lineExtracor.extract line with

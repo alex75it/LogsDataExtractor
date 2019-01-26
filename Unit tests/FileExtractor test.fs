@@ -2,6 +2,7 @@
 
 open NUnit.Framework
 open LogsDataExtractor.Core
+open System.IO
 
 
 
@@ -12,7 +13,7 @@ let ``extract when file does not exists raise an error``() =
     
     let action = fun() -> FileExtractor.extract file |> ignore
     //Assert.Throws<System.Exception>(action)  // does not work
-    Assert.Throws<System.Exception>(TestDelegate(action)) 
+    Assert.Throws<FileNotFoundException>(TestDelegate(action)) 
     //Assert.Throws<System.Exception>( fun () -> FileExtractor.extract file |> ignore )
     |> ignore
 
