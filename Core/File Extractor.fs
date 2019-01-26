@@ -22,12 +22,12 @@ let readlines filePath =
 
 
 // read a file and returns the log Records and stats
-let extract (filePath:string, dateFormat:string) =
+let extract (filePath:string, dateFormat:string, hasThread:bool) =
 
     if not <| File.Exists filePath then raise(FileNotFoundException())
 
     
-    let lineExtracor = new LineExtractor(dateFormat, false)
+    let lineExtracor = new LineExtractor(dateFormat, hasThread)
 
     let records = new List<Record>()
 

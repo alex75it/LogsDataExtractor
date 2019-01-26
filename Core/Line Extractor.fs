@@ -1,9 +1,12 @@
 ﻿module LogsDataExtractor.Core.LineExtractor
 
 open System
+open System.Text.RegularExpressions
 open Entities
 open Patterns
 
+
+let threadRegex = Regex("\.*\[(\d+)\]\.*")
 
 type LineExtractor (dateFormat:string, hasThread:bool) =
 
@@ -41,16 +44,24 @@ type LineExtractor (dateFormat:string, hasThread:bool) =
             //               | _ -> LogLevel.Info
 
 
+
             // consider a 5 character long level
             let logLevel = match line.Substring(dateFormat.Length + 1, 5).TrimEnd() with 
                            | LogLevel level -> level
                            | _ -> LogLevel.Info
 
 
-            let thread = if not hasThread then 0
-                         else match line.Substring(dateFormat.Length + 7, 5) with 
-                              | Thread thread -> thread
-                              | _ -> 0
+            let thread = 
+                if not hasThread then 0
+                else                     
+                    let matches = threadRegex.Matches(line)
+                    if matches.Count > 0 
+                    //then Int32.Parse(matches.[0].Value) 
+                    //else 0
+                    then match Int32.TryParse(matches.[0].Groups.[1].Value) with
+                            | true, num -> num
+                            | _ -> failwithf "\"%s\" is not an integer" matches.[0].Groups.[1].Value
+                    else failwithf "Cannot find a pattern fo the threadv in \"%s\"" line
                 
 
             let threadLength = if not hasThread then 0 else thread.ToString().Length + 3 // add brackets and space 

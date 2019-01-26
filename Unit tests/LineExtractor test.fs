@@ -97,6 +97,20 @@ let ``extract 0 as thread from the line when there is no thread`` () =
     | _ -> Assert.Fail "Record is not returned"
 
 
+[<TestCase("9999-12-31 00:00:00 INFO [123] message")>]
+[<TestCase("9999-12-31 00:00:00 INFO  [123] message")>]
+let ``extract the thread from the line when there is one or more spaces separating it from  the level`` (line) =
+    
+    let dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+    let extractor = new LineExtractor(dateFormat, true)
+    let result = extractor.extract line
+
+    match result with 
+    | Record record -> Assert.AreEqual(123, record.Thread)
+    | _ -> Assert.Fail "Record is not returned"
+
+
 [<TestCase("aaaaaa")>]
 let ``extract the message, single line`` (message) =
     
@@ -110,3 +124,19 @@ let ``extract the message, single line`` (message) =
     match result with 
     | Record record -> Assert.AreEqual(message, record.Message)
     | _ -> Assert.Fail "Record is not returned"
+
+
+//[<Test>]
+//let ``extract parse the thread``() =
+    
+//    let line = "2018-10-31 INFO [123] Message text"
+
+//    let dateFormat = "yyyy-MM-dd HH:mm:ss"
+//    let extractor = LineExtractor(dateFormat, true)
+
+//    // execute
+//    let result = extractor.extract line
+
+//    Assert.NotNull result
+//    ()
+
