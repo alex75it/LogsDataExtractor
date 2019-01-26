@@ -1,4 +1,4 @@
-module LogsDataExtractor.Core.FileExtractor
+﻿module LogsDataExtractor.Core.FileExtractor
 
 open System.IO
 open System.Collections.Generic
@@ -13,6 +13,7 @@ type fileResult = {
     totalRecords: int
     }
 
+let defaultDateFormat = "yyyy-MM-dd HH:mm:ss"
 
 // https://stackoverflow.com/questions/2365527/how-read-a-file-into-a-seq-of-lines-in-f
 let readlines filePath = 
@@ -21,11 +22,11 @@ let readlines filePath =
 
 
 // read a file and returns the log Records and stats
-let extract (filePath:string) =
+let extract (filePath:string, dateFormat:string) =
 
     if not <| File.Exists filePath then raise(FileNotFoundException())
 
-    let dateFormat = "yyyy-MM-dd HH:mm:ss"
+    
     let lineExtracor = new LineExtractor(dateFormat, false)
 
     let records = new List<Record>()
@@ -67,6 +68,7 @@ let extract (filePath:string) =
 
     let mutable currentRecord = Record
     for line in readlines filePath do
+        let a = line.Length
         manageLine line currentRecord
         
         //match manageLine line currentRecord with
