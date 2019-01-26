@@ -10,6 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="data\one line.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Compile Include="FileExtractor test.fs" />
     <Compile Include="LineExtractor test.fs" />
   </ItemGroup>
@@ -23,5 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.fsproj" />
   </ItemGroup>
+
+  <ItemGroup />
 
 </Project>
