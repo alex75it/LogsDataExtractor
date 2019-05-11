@@ -1,4 +1,8 @@
-﻿# Logs Data Extractor
+﻿** Abandoned **
+ I'm using SumoLogic.
+ 
+ 
+ # Logs Data Extractor
 
 This small F# program is intended to be an utility to extract filtered data from application logs.  
 The core application is a .Net Standard library that can be used in .Net Core or .Net Standard projects (also C# ones).
