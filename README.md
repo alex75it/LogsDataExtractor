@@ -1,6 +1,8 @@
-﻿** Abandoned **
+﻿
+ **Abandoned**
  I'm using SumoLogic.
  
+ ---
  
  # Logs Data Extractor
 
